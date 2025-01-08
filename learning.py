@@ -16,6 +16,7 @@ beta1 = 0.1
 beta2 = 0.9
 epochs = 300
 patience = 20
+best_loss = float('inf')
 
 # 初期値
 features = 28 * 28
