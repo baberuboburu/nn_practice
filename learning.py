@@ -15,6 +15,7 @@ lr = 0.00001
 beta1 = 0.1
 beta2 = 0.9
 epochs = 300
+patience = 20
 
 # 初期値
 features = 28 * 28
@@ -65,11 +66,22 @@ for epoch in range(epochs):
     total += target_labels.size(0)
 
   # エポックごとの損失と正答率
+  epoch_loss = running_loss / len(train_loader)
   train_losses.append(running_loss / len(train_loader))
   accuracies.append(100 * correct / total)
 
-  if epoch % 100 == 0:
-    print(f"Epoch {epoch}/{epochs}, Loss: {loss.item()}")
+  print(f"Epoch {epoch}/{epochs}, Loss: {loss.item()}")
+
+  # 早期終了の判定
+  if epoch_loss < best_loss:
+    best_loss = epoch_loss
+    patience_counter = 0
+  else:
+    patience_counter += 1
+
+  if patience_counter >= patience:
+    print(f"Early stopping at epoch {epoch}")
+    break
 
 
 # モデルの保存
