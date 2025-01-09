@@ -71,7 +71,7 @@ for epoch in range(epochs):
   train_losses.append(running_loss / len(train_loader))
   accuracies.append(100 * correct / total)
 
-  print(f"Epoch {epoch}/{epochs}, Loss: {loss.item()}")
+  print(f"Epoch {epoch}/{epochs}, Loss: {loss.item()}, Accuracy: {100 * correct / total}")
 
   # 早期終了の判定
   if epoch_loss < best_loss:
@@ -82,6 +82,7 @@ for epoch in range(epochs):
 
   if patience_counter >= patience:
     print(f"Early stopping at epoch {epoch}")
+    epochs = epoch + 1
     break
 
 
